@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@ExposesResourceFor(UserResource.class)
 @RequestMapping(value = "/users")
 public class UserController {
 
@@ -25,7 +27,8 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<PagedResources<UserResource>> users(
-			@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+			@RequestParam(required = false, defaultValue = "0") Integer page,
+			@RequestParam(required = false, defaultValue = "2") Integer size) {
 		PageRequest pageable = new PageRequest(page, size);
 		Page<User> users = repository.findAll(pageable);
 		PagedResources<UserResource> resource = pagedResourcesAssembler.toResource(users, userResourceAssembler);

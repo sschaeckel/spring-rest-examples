@@ -1,7 +1,9 @@
 package com.example.users;
 
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.core.Relation;
 
+@Relation(value = "user", collectionRelation = "users")
 public class UserResource extends ResourceSupport{
 
 	private String firstName;
