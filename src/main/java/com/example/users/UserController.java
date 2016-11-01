@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value = "/users")
 public class UserController {
 
 	@Autowired
@@ -22,7 +23,7 @@ public class UserController {
 	@Autowired
 	private UserResourceAssembler userResourceAssembler;
 
-	@RequestMapping(method = RequestMethod.GET, value = "/users")
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<PagedResources<UserResource>> users(
 			@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
 		PageRequest pageable = new PageRequest(page, size);
